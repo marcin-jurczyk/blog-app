@@ -67,7 +67,7 @@ export const NavBarLogged = () => {
             <Menu.Item className={"add-post"}>
                 <Link to="add_post">Add post</Link>
             </Menu.Item>
-            <SubMenu title={handleUserItem()} className="submenu">
+            <SubMenu title={handleUserItem()} className={"submenu"}>
                 <Menu.Item onClick={() => handleProfile()} >
                     <UserOutlined /> {"\t"} Profile
                 </Menu.Item>

@@ -22,7 +22,7 @@ def create_app():
     app.config.update(
         MONGODB_SETTINGS={
             'db': 'blog',
-            'host': 'localhost',
+            'host': 'mongodb',
             'port': 27017
         },
         SECRET_KEY='90a3c5d6adad54fde2b0f37d72d82cc739184e42f1c78cad'

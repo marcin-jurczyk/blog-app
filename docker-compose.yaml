@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+   
+   client:
+      build:
+         context: ./frontend
+         dockerfile: Dockerfile
+      container_name: client
+      tty: true
+      ports:
+         - "3000:3000"
+      volumes: 
+         - ./frontend:/app
+         - /app/node_modules
+      networks:
+         - frontend
+
+   mongodb:
+      image: mongo
+      container_name: mongo
+      restart: unless-stopped
+      hostname: test_mongodb
+      ports:
+         - 27017:27017
+      volumes:
+         - mongodbdata:/data/db
+      networks:
+         - backend
+
+   api:
+      build: 
+         context: ./backend
+         dockerfile: Dockerfile
+      container_name: api
+      ports:
+         - "5000:5000"
+      environment:
+         MONGODB_HOST: mongodb
+         MONGODB_USERNAME: "apiuser"
+         MONGODB_PASSWORD: "apipassword"
+      depends_on: 
+         - mongodb
+      networks:
+         - frontend
+         - backend
+
+networks:
+   frontend:
+      driver: bridge
+   backend:
+      driver: bridge
+volumes:
+   mongodbdata:
+      driver: local
