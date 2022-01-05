@@ -1,0 +1,38 @@
+.post-container {
+    /*background: #ff0000;*/
+    width: 90%;
+    margin: auto;
+    padding: 2%;
+}
+
+.post-info {
+    background: #e66d10;
+    width: 100%;
+    margin: 10px 0;
+    height: 40px;
+    position: relative;
+}
+
+.post-info-item {
+    background: #61dafb;
+    margin: 1px;
+}
+
+.post-title {
+    background: #2fff00;
+    font-size: 45px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.post-body {
+    background: #ffbf00;
+}
+
+.post-comments {
+    background: #ffbf00;
+}
+
+.new-comment {
+    /*margin-left: 30px;*/
+}

@@ -1,0 +1,46 @@
+@import '~antd/dist/antd.css';
+
+.header {
+    background: #fff;
+    overflow: hidden;
+    position: fixed;
+    width:100%;
+    left:0;
+    top:0;
+    right: 0;
+    z-index: 1000;
+}
+
+.bg {
+    background-size:cover;
+    position: absolute;
+    width: 100%;
+    opacity: 0.6;
+    margin-bottom: 200px;
+}
+
+/*.layout-content {*/
+/*    background: url("../_images/blog-background.jpeg") no-repeat 0 0;*/
+/*}*/
+
+.content {
+    background: #fff;
+    /* top - left/right - bottom */
+    margin: 95px 70px 69px;
+    border-radius: 20px;
+    position: relative;
+    z-index: 0;
+    /*overflow: hidden;*/
+    /*height: 50px;*/
+    /*padding: 2% 5%;*/
+}
+
+.footer {
+    text-align: center;
+    position:fixed;
+    width:100%;
+    left:0;
+    bottom:0;
+    right: 0;
+    z-index: 1000;
+}

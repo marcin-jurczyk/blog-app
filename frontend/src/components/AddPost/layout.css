@@ -1,0 +1,25 @@
+.main {
+    display: grid;
+    place-items: center;
+
+}
+
+.add-new-post-container {
+    /*overflow: scroll;*/
+    font-size: 30px;
+    /*font-weight: bold;*/
+}
+
+.add-new-post {
+    margin: 3% 15% 3%;
+}
+
+.add-post-button {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+}
+
+.title-input {
+    width: 100%;
+}

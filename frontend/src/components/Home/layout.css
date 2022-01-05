@@ -1,0 +1,103 @@
+.post-list {
+    /*background: greenyellow;*/
+    padding: 2% 2%;
+    border-radius: 20px;
+    /*display: flex;*/
+    /*align-items: stretch;*/
+}
+
+.loader-antd {
+    width: 100%;
+}
+
+.loading {
+    text-align: center;
+    /*margin-left: -47px;*/
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+.lds-ellipsis div {
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #5d5d5d;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+    border: 0;
+    background-color: transparent;
+    /*border-radius: 20px;*/
+}
+
+.ant-input-group-addon {
+    background: transparent;
+}
+
+.ant-input-group {
+    border-radius: 20px;
+    border: 1px solid #d9d9d9;
+}
+
+/*#thing {*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+
+/*    !* HOVER OFF *!*/
+/*    -webkit-transition: padding 2s;*/
+/*}*/
+
+/*#thing:hover {*/
+/*    padding: 20px;*/
+/*    border-radius: 15px;*/
+
+/*    !* HOVER ON *!*/
+/*    -webkit-transition: border-radius 2s;*/
+/*}*/
