@@ -10,6 +10,10 @@
     padding-bottom: 20px;
 }
 
+.ant-menu-horizontal {
+    border-bottom: none;
+}
+
 .wave {
     position: absolute;
     width: 100%;

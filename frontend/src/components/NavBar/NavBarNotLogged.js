@@ -12,14 +12,14 @@ export const NavBarNotLogged = () => {
             theme="light"
             mode="horizontal"
         >
-            <Menu.Item className={"home-page"}>
-                <Link to="home"><HomeOutlined />Home Page</Link>
+            <Menu.Item key="home" className={"home-page"} icon={<HomeOutlined />}>
+                <Link to="home">Home Page</Link>
             </Menu.Item>
-            <Menu.Item className={"login"}>
-                <Link to="login">Login</Link>
-            </Menu.Item>
-            <Menu.Item className={"sign-up"}>
+            <Menu.Item key="sign-up" className={"sign-up"} style={{ marginLeft: 'auto' }}>
                 <Link to="sign-up">Sign-up</Link>
+            </Menu.Item>
+            <Menu.Item key="login" className={"login"} style={{ marginLeft: '0' }}>
+                <Link to="login">Login</Link>
             </Menu.Item>
         </Menu>
     );

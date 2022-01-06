@@ -61,17 +61,17 @@ export const NavBarLogged = () => {
             theme="light"
             mode="horizontal"
         >
-            <Menu.Item className={"home-page"}>
-                <Link to="home"><HomeOutlined />Home Page</Link>
+            <Menu.Item key={"home"} className={"home-page"} icon={<HomeOutlined />}>
+                <Link to="home">Home Page</Link>
             </Menu.Item>
-            <Menu.Item className={"add-post"}>
+            <Menu.Item key={"add-post"} className={"add-post"}>
                 <Link to="add_post">Add post</Link>
             </Menu.Item>
-            <SubMenu title={handleUserItem()} className={"submenu"}>
-                <Menu.Item onClick={() => handleProfile()} >
+            <SubMenu key={"submenu"} title={handleUserItem()} style={{ marginLeft: 'auto' }}>
+                <Menu.Item key={"profile"} onClick={() => handleProfile()} >
                     <UserOutlined /> {"\t"} Profile
                 </Menu.Item>
-                <Menu.Item onClick={() => handleLogout()} >
+                <Menu.Item key={"logout"} onClick={() => handleLogout()} >
                     <LogoutOutlined /> {"\t"} Logout
                 </Menu.Item>
             </SubMenu>
