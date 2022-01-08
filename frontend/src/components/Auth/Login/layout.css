@@ -18,3 +18,10 @@
     padding: 10px;
 }
 
+.register {
+    text-shadow: 2px 2px 1px #fff
+}
+
+.limitMessage {
+    text-align: center;
+}

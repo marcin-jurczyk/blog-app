@@ -1,12 +1,15 @@
 import bcrypt
-from flask import Response, jsonify
-from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask import Response, jsonify, make_response
+from flask_jwt_extended import create_access_token, get_jwt_identity, set_access_cookies, create_refresh_token, \
+    set_refresh_cookies, unset_jwt_cookies
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from app import TOKEN_TIME
 from model.user import User
 
-#snyk.io
-#https na awsie, flaga secure
+
+# snyk.io
+# https na awsie, flaga secure
 def get_user_id(email):
     user = User.objects(email=email).first()
     if user is not None:
@@ -39,22 +42,25 @@ def login_service(email, password):
 
     if user is not None:
         if bcrypt.checkpw(password.encode('utf8'), user.password.encode('utf8')):
-            # if check_password_hash(user.password, str(password)):
             access_token = create_access_token(identity=email)
-            res = jsonify({
-                # http only
-                'Bearer token': access_token
-            })
+            response = jsonify({'login': True})
+            set_access_cookies(response, access_token)
             expire_date = datetime.datetime.now()
-            expire_date = expire_date + datetime.timedelta(days=90)
-            res.set_cookie("login_hash", value=access_token, httponly=True, expires=expire_date)
-            res.set_cookie("isLogged", value="True", httponly=False, expires=expire_date)
-
-            return res
+            expire_date = expire_date + datetime.timedelta(minutes=TOKEN_TIME)
+            response.set_cookie("is_logged", value="True", httponly=False, expires=expire_date)
+            return response
         else:
             return Response("Password is incorrect", status=401)
     else:
         return Response("No user found with email: " + email, status=404)
+
+
+def logout_service():
+    response = jsonify({'logout': True})
+    response.set_cookie("is_logged", value="False", httponly=False)
+    unset_jwt_cookies(response)
+    return response
+
 
 # walidacja danych DTO
 # def sign_up_service(email, username, password):
@@ -200,3 +206,14 @@ def password_check(password):
         'lowercase': lowercase_error,
         'symbol': symbol_error,
     }
+
+
+def get_user_service():
+    email = get_jwt_identity()
+
+    user = User.objects(email=email).first()
+
+    if user is not None:
+        return user.get_user_info()
+    else:
+        return Response("User not found...", status=404)

@@ -11,6 +11,7 @@ import TextArea from "antd/es/input/TextArea";
 import {API} from "../../services/api";
 import './layout.css'
 import {tagColor} from "../../services/gradient";
+import Cookies from "js-cookie";
 
 const {Title, Paragraph} = Typography;
 
@@ -126,7 +127,7 @@ export const Post = () => {
         )
     }
 
-    if (localStorage.token === 'undefined' || !localStorage.token) {
+    if (Cookies.get('is_logged') !== 'True' || !Cookies.get('is_logged')) {
         return (
             <NotLogged>
                 {content()}

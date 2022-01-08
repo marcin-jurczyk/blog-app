@@ -2,7 +2,7 @@ import axios from 'axios'
 import {history} from "./history";
 
 const instance = axios.create({
-    baseURL: 'http://127.0.0.1:5000/api/blog',
+    baseURL: 'http://localhost:5000/api/blog',
     withCredentials: true,
 });
 

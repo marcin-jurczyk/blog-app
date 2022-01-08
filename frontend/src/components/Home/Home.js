@@ -8,6 +8,7 @@ import './layout.css'
 import qs from 'qs'
 import {Input} from 'antd';
 import {SearchOutlined} from "@ant-design/icons";
+import Cookies from "js-cookie";
 
 export const Home = () => {
 
@@ -139,7 +140,7 @@ export const Home = () => {
         )
     }
 
-    if (localStorage.token === 'undefined' || !localStorage.token) {
+    if (Cookies.get('is_logged') !== 'True' || !Cookies.get('is_logged')) {
         return (
             <NotLogged>
                 {content()}

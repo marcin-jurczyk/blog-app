@@ -1,7 +1,7 @@
 import React, {createContext} from 'react'
-import {setAuthHeaders} from "./api";
+import {API, setAuthHeaders} from "./api";
 import jwt_decode from 'jwt-decode'
-import {Image} from "antd";
+import {Image, message} from "antd";
 import Avatar from "antd/es/avatar/avatar";
 
 export const UserContext = createContext(null);
@@ -36,10 +36,27 @@ export const login = (token) => {
 
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    setAuthHeaders(null);
-    window.location.reload();
+    API.post(`/auth/logout`)
+        .then(response => {
+            if (response['logout'] === 'True') {
+                message.success("Logged out successfully!")
+            }
+        })
+    // localStorage.removeItem('token');
+    // setAuthHeaders(null);
+    // window.location.reload();
 };
+
+export const get_logged_user = () => {
+    API.get(`/auth/get_user`)
+        .then(response => {return response.data})
+        .catch(errInfo => {
+            if (errInfo.response.data['msg'] === "Missing cookie \"access_token_cookie\"")
+                message.success("Logged out successfully!")
+            else
+                message.error("Token expired!")
+        })
+}
 
 
 export const getEmail = () => {

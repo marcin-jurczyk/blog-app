@@ -20,7 +20,7 @@ const color2 = '#2dc4f3'
 export const Login = () => {
     const history = useHistory()
     const [limit, setLimit] = useState(false)
-    const [limitMessage, setLimitMessage] = useState()
+    const [limitMessage, setLimitMessage] = useState("")
 
     const onFinish = values => {
         API.post('/auth/login', {
@@ -29,9 +29,9 @@ export const Login = () => {
         })
             .then((response => {
                 setLimit(false)
+                setLimitMessage("")
                 login(response.data['Bearer token']);
-                console.log("headers", response)
-                Cookies.set('access_token', response.headers['login_hash'])
+                // Cookies.set('access_token', response.headers['login_hash'])
                 // response.cookie('token', response.data['Bearer token'], {
                 //     maxAge: 60 * 60 * 1000, // 1 hour
                 //     httpOnly: true,
@@ -42,8 +42,12 @@ export const Login = () => {
             }))
             .catch(errInfo => {
                 if (errInfo.response.status === 429) {
+                    const headers = errInfo.response.headers
+                    let retry_after = new Date(headers['retry-after'])
+                    let date = new Date(headers['date'])
+                    let time_left = new Date(retry_after - date)
+                    setLimitMessage(`Too many logins, time left: ${time_left.getMinutes()}:${time_left.getSeconds()}`)
                     setLimit(true)
-                    console.log(errInfo.response)
                     message.error('Too many logins')
                 }
                 else
@@ -96,14 +100,14 @@ export const Login = () => {
                                 Login
                             </Button>
                             <div className="link">
-                                Or <Link to="/sign-up">register now!</Link>
+                                Or <Link to="/sign-up" className={"register"}>register now!</Link>
                             </div>
                         </Form.Item>
                     </Form>
                     :
-                    <>
+                    <div className={"limitMessage"}>
                         {limitMessage}
-                    </>
+                    </div>
                 }
             </div>
             {wave(color1, color2, "40%")}

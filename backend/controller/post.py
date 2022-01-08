@@ -1,8 +1,11 @@
+from datetime import timezone, timedelta
+
 from bson import json_util
 from flask import Blueprint, request
 from flask_cors import cross_origin
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt, create_access_token, set_access_cookies
 
+from app import TOKEN_TIME
 from service.post import *
 
 post = Blueprint('post', __name__)
@@ -14,6 +17,24 @@ def credentials(response):
     header['Access-Control-Allow-Credentials'] = 'true'
     header['Access-Control-Allow-Origin'] = 'http://localhost:3000'
     return response
+
+
+# @post.after_request
+# @jwt_required()
+# def refresh_expiring_jwts_posts(response):
+#     try:
+#         exp_timestamp = get_jwt()["exp"]
+#         now = datetime.now(timezone.utc)
+#         target_timestamp = datetime.timestamp(now + timedelta(minutes=TOKEN_TIME/2))
+#         if target_timestamp > exp_timestamp:
+#             print("refreshing token")
+#             access_token = create_access_token(identity=get_jwt_identity())
+#             set_access_cookies(response, access_token)
+#         return response
+#     except (RuntimeError, KeyError):
+#         print("error")
+#         response.set_cookie("is_logged", value="False", httponly=False)
+#         return response
 
 
 @post.route('/new', methods=['POST'])
@@ -118,3 +139,23 @@ def add_new_comment():
 def get_post_comments():
     post_id = request.args.get('post_id')
     return get_post_comments_service(post_id)
+
+
+@post.route('/fake', methods=['POST'])
+@jwt_required()
+@cross_origin()
+def get_fake_post():
+    from faker import Faker
+    from mdgen import MarkdownPostProvider
+    from random import randint
+    import markdown as m
+
+    fake = Faker()
+    fake.add_provider(MarkdownPostProvider)
+    tags_num = randint(0, 9)
+
+    title = fake.sentence()
+    body = m.markdown(fake.post(size='medium'))
+    tags = fake.words(nb=tags_num, unique=True)
+
+    return add_new_post_service(title, body, tags)

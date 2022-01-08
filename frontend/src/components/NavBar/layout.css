@@ -1,5 +1,5 @@
 .sign-up, .login, .logout{
-    float: right;
+    float: left;
 }
 
 .user-item-label {

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Menu, message} from "antd";
+import {Button, Menu, message} from "antd";
 import {Link, useHistory} from "react-router-dom";
 import {getEmail, logout, UserContext} from "../../services/user";
 import {HomeOutlined, LogoutOutlined, UserOutlined} from "@ant-design/icons"
@@ -15,10 +15,20 @@ export const NavBarLogged = () => {
 
     useEffect(() => {
         async function loadData() {
-            const user = await API.get(`/auth/email/${getEmail()}`)
+            const user = await API.get(`/auth/get_user`)
             setUser(user.data);
         }
-        loadData();
+        loadData().catch(errInfo => {
+            if (errInfo.response.data['msg'] === "Missing cookie \"access_token_cookie\"")
+                message.success("Logged out successfully!")
+            else {
+                message.error("Token expired!")
+                history.push("/")
+                window.location.reload()
+            }
+
+            console.log(errInfo.response)
+        })
     }, [setUser])
 
     const getAvatar = () => {
@@ -34,8 +44,8 @@ export const NavBarLogged = () => {
     };
 
     const handleLogout = () => {
-        history.push('/');
         logout();
+        history.push('/');
     };
 
     const handleUserItem = () => {
@@ -55,6 +65,11 @@ export const NavBarLogged = () => {
         history.push('/profile', {activeKey: "1"});
     }
 
+    const generateFakePost = () => {
+        API.post("/post/fake").then(r => console.log(r))
+        window.location.reload()
+    }
+
     return (
         <Menu
             className="menu"
@@ -67,6 +82,9 @@ export const NavBarLogged = () => {
             <Menu.Item key={"add-post"} className={"add-post"}>
                 <Link to="add_post">Add post</Link>
             </Menu.Item>
+            <Menu.Item key={"add-fake-post"} className={"add-post"}>
+                <Button onClick={generateFakePost}>Add fake post</Button>
+            </Menu.Item>
             <SubMenu key={"submenu"} title={handleUserItem()} style={{ marginLeft: 'auto' }}>
                 <Menu.Item key={"profile"} onClick={() => handleProfile()} >
                     <UserOutlined /> {"\t"} Profile
@@ -78,3 +96,4 @@ export const NavBarLogged = () => {
         </Menu>
     );
 }
+

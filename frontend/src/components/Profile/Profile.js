@@ -36,7 +36,7 @@ export const Profile = () => {
         <Logged>
             <div className="tab">
                 <Tabs
-                    defaultActiveKey={location.state.activeKey}
+                    // defaultActiveKey={location.state.activeKey}
                     centered={true}
                 >
                     <TabPane tab="User info" key="1">
